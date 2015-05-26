@@ -21,6 +21,8 @@ public class Assignment {
 
 	public int mastery = 0;
 
+  public string displayString = "";
+
 	public string assignmentTitle = "";
   public string fullAssignTitle = "";
   public string type = "";
@@ -28,11 +30,12 @@ public class Assignment {
   public float timeAtLoad;
 
 
-  public Assignment(string assignTitle, string templateType, string fullAssignTit=null){
+  public Assignment(string assignTitle, string templateType, string dispString = null, string fullAssignTit=null){
     if(fullAssignTit != null){
       fullAssignTitle = fullAssignTit;
     }
     type = templateType;
+    displayString = dispString != null ? dispString : assignTitle;
     assignmentTitle = assignTitle;
   }
 }
@@ -66,15 +69,14 @@ public class AppManager : MonoBehaviour {
 	}
 
 	void Update () {
-    print(currentAppState);
 		switch (currentAppState) {
       case AppState.Login :
         if(userExists){
           currentAppState = AppState.Initialize;
           if(currentAppState == AppState.Initialize){
             if(hardcoded){
-              currentAssignments.Add(new Assignment("hotspots_periodic","hotspots"));
-              currentAssignments.Add(new Assignment("cards_Chemistry","cards"));
+              currentAssignments.Add(new Assignment("hotspots_periodic","hotspots", "Periodic Table Facts"));
+              currentAssignments.Add(new Assignment("cards_Chemistry","cards", "Sub-Atomic Particles"));
               currentAppState = AppState.MenuConfig;
             }
             Application.LoadLevel("AssignmentMenu");
@@ -137,7 +139,7 @@ public class AppManager : MonoBehaviour {
 	}
 
   void OnLevelWasLoaded(int level){
-    if(level == 2){
+    if(level == 1){
       currentAppState = AppState.MenuConfig;
     }
   }
@@ -156,6 +158,12 @@ public class AppManager : MonoBehaviour {
 
   public void quitTemp(){
     currentAssignments[currIndex].secondsOnAssignment = currentAssignments[currIndex].timeAtLoad-Time.time;
+  }
+
+  public void logOut(){
+    username = "";
+    password = "";
+    Application.LoadLevel("Login");
   }
 
   public int countStringOccurrences(string text, string pattern){

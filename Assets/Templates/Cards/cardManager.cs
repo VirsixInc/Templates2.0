@@ -82,9 +82,9 @@ public class cardManager : MonoBehaviour {
   private int amtOfCards;
   private int correctTermIndex;
   private int totalMastery;
-  private int requiredMastery = 4;
+  private int requiredMastery = 1;
   private int currentPhase;
-  private int levenThresh = 3;
+  private int levenThresh = 2;
   public TextAsset csvToUse;
 
   public string baseImagePath;
@@ -332,6 +332,20 @@ public class cardManager : MonoBehaviour {
     if(noThisNum != -1 && !listToReturn.Contains(noThisNum)){
       listToReturn[Random.Range(0,listToReturn.Count)] = noThisNum;
     }
+    /*
+    if(amt > randRange){
+      amt = randRange;
+      print("RANGE CANNOT BE MORE THAN AMT");
+    }
+    while(listToReturn.Count < amt){
+      int newVal;
+      do{
+        newVal = Random.Range(0,randRange);
+      }while(listToReturn.Contains(newVal));
+      listToReturn.Add(newVal);
+    }
+    */
+    //listToReturn = listToReturn.OrderBy(x=>Random.Range(0,listToReturn.Count)).ToList();
     return listToReturn;
   }
 
